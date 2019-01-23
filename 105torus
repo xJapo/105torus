@@ -1,0 +1,96 @@
+#!/usr/bin/python3
+
+##
+## EPITECH PROJECT, 2018
+## Untitled (Workspace)
+## File description:
+## 105torus.py
+##
+
+import sys
+import math
+from math import *
+
+try:
+    opt = int(sys.argv[1])
+    a0 = int(sys.argv[2])
+    a1 = int(sys.argv[3])
+    a2 = int(sys.argv[4])
+    a3 = int(sys.argv[5])
+    a4 = int(sys.argv[6])
+    n = int(sys.argv[7])
+    if len(sys.argv) != 8:
+        sys.exit(84)
+    if opt > 3:
+        sys.exit(84)
+    if opt < 1:
+        sys.exit(84)
+    if n < 0:
+        sys.exit(84)
+
+except:
+    sys.exit(84)
+
+
+def func(x):
+    func = (a4 * pow(x, 4) + a3 * pow(x, 3) + a2 * pow(x, 2) + a1 * x + a0)
+    return (func)
+
+
+def fucnderiv(x):
+    fucnderiv = (4 * a4 * pow(x, 3) + 3 * a3 * pow(x, 2) + 2 * a2 * x + a1)
+    return (fucnderiv)
+
+
+def bisection_method(params):
+    a = 0
+    b = 1
+    c = 0
+    i = 1
+
+    while abs (c - i) > pow(10, -n):
+        i = c
+        c = (a + b) / 2
+        if func(a) * func(c) <= 0:
+            b = c
+        else:
+            a = c       
+        if pow(10, n) * c % 1 == 0:
+            print("x =", c)
+        else:
+            print("x = %.*f" % (n, c))
+
+
+def secant_method(params):
+    a = 0
+    b = 1
+    c = 0
+
+    while abs (a - b) > pow(10, -n):
+        c = b - ((b - a) / (func(b) - func(a))) * func(b)
+        a = b
+        b = c
+        if pow(10, n) * c % 1 == 0:
+            print("x =", c)
+        else:
+            print("x = %.*f" % (n, c))
+
+
+def newton_method(params):
+    a = 0.5 
+
+    print ("x =", a)
+    while (abs(func(a)/fucnderiv(a)) > pow(10, -n)):
+        a = a - (func(a)/fucnderiv(a))
+        if pow(10, n) * func(a) % 1 == 0:
+            print("x =", a)
+        else:
+            print("x = %.*f" % (n, a))
+
+
+if opt == 1:
+    bisection_method(n)
+if opt == 2:
+    newton_method(n)
+if opt == 3:
+    secant_method(n)
